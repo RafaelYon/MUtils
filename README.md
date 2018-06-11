@@ -21,3 +21,6 @@ First [download](https://github.com/RafaelYon/MUtils/releases) the latest versio
 - [x] Set value from a cell
 - [x] Set values from a sheet row
 - [x] Set values from a sheet column
+- [x] Create a new sheets
+- [x] Copy cells
+- [x] Paste cells
