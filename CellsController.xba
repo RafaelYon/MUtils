@@ -9,6 +9,30 @@
 &apos; Set cells properties:
 &apos;	***********************************
 
+Function GetCellByName(sheetName As String, cellName As String) As Object
+	Dim doc, sheet As Object
+	
+	&apos; Get document references
+	doc = ThisComponent
+	sheet = doc.Sheets.getByName(sheetName)
+	
+	GetCellByName = sheet.getCellByName(cellName)
+End Function
+
+Function GetCellByPosition(sheetName As String, x As Integer, y As Integer) As Object
+	Dim doc, sheet AS Object
+	
+	&apos; Get document references
+	doc = ThisComponent
+	sheet = doc.Sheets.getByName(sheetName)
+	
+	GetCellByPosition = sheet.getCellByPosition(x, y)
+End Function
+
+&apos;*******************************
+&apos; Set cells properties:
+&apos;	***********************************
+
 &apos; Set cell formula
 &apos; Params:
 &apos; 	sheetName	: The sheet name of the specified cell.
