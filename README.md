@@ -10,6 +10,8 @@ Because, although the standard VBA spreadsheet modules are very good, there is a
 First [download](https://github.com/RafaelYon/MUtils/releases) the latest version of MUtils. Now Import this module into your spreadsheet macro project (if you do not know how to import please see [this LibreOffice tutorial](https://documentation.libreoffice.org/assets/Uploads/Documentation/en/GS5.1/HTML/GS5113-GettingStartedWithMacros.html#__RefHeading__5168_1196992793))
 
 ## Features
+- [x] Get cell by name
+- [x] Get cell by position
 - [x] Set cell formula
 - [x] Set cell background color
 - [x] Set cell horizontal justification
