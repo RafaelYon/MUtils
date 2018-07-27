@@ -10,6 +10,7 @@ Because, although the standard VBA spreadsheet modules are very good, there is a
 First [download](https://github.com/RafaelYon/MUtils/releases) the latest version of MUtils. Now Import this module into your spreadsheet macro project (if you do not know how to import please see [this LibreOffice tutorial](https://documentation.libreoffice.org/assets/Uploads/Documentation/en/GS5.1/HTML/GS5113-GettingStartedWithMacros.html#__RefHeading__5168_1196992793))
 
 ## Features
+- [x] Search cell position by string
 - [x] Get cell by name
 - [x] Get cell by position
 - [x] Set cell formula
@@ -23,6 +24,9 @@ First [download](https://github.com/RafaelYon/MUtils/releases) the latest versio
 - [x] Set value from a cell
 - [x] Set values from a sheet row
 - [x] Set values from a sheet column
-- [x] Create a new sheets
 - [x] Copy cells
 - [x] Paste cells
+- [x] Checks if a sheet exists
+- [x] Create a new sheets
+- [x] Copy sheets (events included)
+- [x] Remove sheets

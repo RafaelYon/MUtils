@@ -5,7 +5,22 @@
 &apos; Author:
 &apos;	Rafael Antonio Yon - rafael1999.yon@gmail.com
 
-&apos; Set cell formula
+&apos; Check if was already exists a sheet with determined name.
+&apos; Params:
+&apos;	sheetName	: The name of sheet to verify.
+&apos; Return:
+&apos;	Boolean with exists value.
+Function ExistsSheet(sheetName As String) As Boolean
+	Dim doc As Object
+	
+	&apos; Get document references
+	doc = ThisComponent
+	
+	&apos; Return value
+	ExistsSheet = doc.Sheets.hasByName(sheetName)
+End Function
+
+&apos; Insert new sheet
 &apos; Params:
 &apos; 	sheetName	: The name of the new sheet
 &apos;	atPosition	: The position of the new sheet
@@ -17,10 +32,49 @@ Sub InsertNewSheet(sheetName As String, atPosition As Integer)
 	
 	&apos; Create new sheet
 	&apos; The name of sheet is a temporary because the creating a new Sheet with a run-time string causes an exception.
-	doc.Sheets.insertNewByName(&quot;tempName&quot;, atPosition)
+	doc.Sheets.insertNewByName(&quot;sheet&quot;, atPosition)
 	
 	&apos; Rename sheet
-	sheet = doc.Sheets.getByName(&quot;tempName&quot;)
+	sheet = doc.Sheets.getByName(&quot;sheet&quot;)
 	sheet.Name = sheetName
+End Sub
+
+Sub CopySheetByName(originalSheetName As String, newSheetName As String)
+	Dim doc As Object
+	Dim originalEvents(), newEvents(), eventsNames(), event As Variant
+	Dim nextIndex As Integer
+	
+	&apos; Get document references
+	doc = ThisComponent
+	
+	&apos; Get next sheet index
+	nextIndex = doc.getSheets.getCount + 1
+	
+	&apos; Copy sheet
+	doc.sheets.copyByName(originalSheetName, newSheetName, nextIndex)
+	
+	&apos; Get sheet events references
+	originalEvents = doc.Sheets.getByName(originalSheetName).Events
+	newEvents = doc.Sheets.getByName(newSheetName).Events
+	eventsNames = originalEvents.ElementNames
+	
+	&apos; Iterate every event from orifinal sheet
+	For i = 0 To ubound(eventsNames)
+		event = originalEvents.getByName(eventsNames(i))
+		newEvents.replaceByName(eventsNames(i), event)
+	Next
+End Sub
+
+&apos; Remove determined sheet by name
+&apos; Params:
+&apos;	sheetName	: The name of the determined sheet.
+Sub RemoveSheetByName(sheetName As String)
+	Dim doc As Object
+	
+	&apos; Get document references
+	doc = ThisComponent
+	
+	&apos; Remove sheet by name
+	doc.Sheets.removeByName(sheetName)
 End Sub
 </script:module>

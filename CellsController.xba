@@ -9,6 +9,11 @@
 &apos; Set cells properties:
 &apos;	***********************************
 
+&apos; Get cell by name
+&apos; Params:
+&apos; 	sheetName	: The sheet name of the specified cell.
+&apos;	cellName	: The cell name. Ex.: A1
+&apos; Returns	: The cell.
 Function GetCellByName(sheetName As String, cellName As String) As Object
 	Dim doc, sheet As Object
 	
@@ -19,6 +24,12 @@ Function GetCellByName(sheetName As String, cellName As String) As Object
 	GetCellByName = sheet.getCellByName(cellName)
 End Function
 
+&apos; Get cell by position
+&apos; Params:
+&apos; 	sheetName	: The sheet name of the specified cell.
+&apos;	x			: The x coordinate of the specified cell.
+&apos;	y			: The y coordinate of the specified cell.
+&apos; Returns	: The cell.
 Function GetCellByPosition(sheetName As String, x As Integer, y As Integer) As Object
 	Dim doc, sheet AS Object
 	
@@ -320,4 +331,75 @@ Sub PasteCopiedCells(sheetName As String, x As Integer, y As Integer, cellCopyAd
 	
 	sheet.CopyRange(pasteAddress, cellCopyAddress)
 End Sub
+
+&apos;*******************************
+&apos; Miscellaneous
+&apos;	***********************************
+
+&apos; Find cell by your string, this is a linear search.
+&apos; A rectangle is definied to limit a search operation.
+&apos; Params:
+&apos;	sheetName	: The sheet name for search.
+&apos;	x			: The x position in a search rectangle.
+&apos;	y			: The y position in a search rectangle.
+&apos;	width		: The width of the search rectagle.
+&apos;	height		: The height of the seatch rectangle.
+&apos;	value		: The string to find.
+&apos; Return:
+&apos;	The cell position array if was find or Null value if not found.
+Function FindCellPositionByString(sheetName As String, x As Integer, y As Integer, width As Integer, height As Integer, value As String)
+	Dim doc, sheet, cell As Object
+	Dim oldX As Integer
+	Dim result(1) As Variant
+	
+	&apos; Check if configuration is valid
+	If (x &gt; width) OR (y &gt; height) Then
+		&apos; Configuration invalid, return Null.
+		result(0) = Null
+		result(1) = Null
+		
+		FindCellPositionByString = result
+		
+		Exit Function
+	End If
+	
+	&apos; Get document references
+	doc = ThisComponent
+	sheet = doc.Sheets.getByName(sheetName)
+	
+	&apos; Backup x coordinate
+	oldX = x
+	
+	&apos; Iterate every row
+	For row = y To height Step 1
+		
+		&apos; Iterate every column of this row
+		For col = x To width Step 1
+			
+			&apos; We don&apos;t use the Function &quot;GetCellByName&quot; to improve search speed (doc and sheet are declared once 1 time)
+			cell = sheet.getCellByPosition(col, row)
+			
+			&apos; Check if is the value
+			If cell.String = value Then
+				&apos; Find return this cell.
+				
+				&apos; Set position in X, Y ordem
+				result(0) = col
+				result(1) = row
+				
+				FindCellPositionByString = result
+				
+				Exit Function
+			End If
+			
+		Next
+		
+	Next
+	
+	&apos; If was come here, &quot;value&quot; not found in search rectangle
+	result(0) = Null
+	result(1) = Null
+		
+	FindCellPositionByString = result
+End Function
 </script:module>
